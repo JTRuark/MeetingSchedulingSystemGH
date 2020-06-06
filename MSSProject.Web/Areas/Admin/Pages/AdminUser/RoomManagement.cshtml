@@ -1,0 +1,52 @@
+﻿@page
+@model RoomManagementModel
+@{
+    ViewData["Title"] = "Room Management";
+    ViewData["ActivePage"] = AdminHubNavPages.RoomManagement;
+}
+
+<h4 class="text-center mb-3">@ViewData["Title"]</h4>
+
+<p class="text-center mb-3">To change room availability, press "Change Availability" button.</p>
+<div class="d-flex justify-content-around flex-wrap">
+    @foreach (var room in Model.RoomList)
+    {
+        <div class="card text-center mb-4 shadow-lg" id="@room.RoomId" style="width: 13rem; height: 15rem; background-color: #185895;">
+            <h5 class="card-header" style="background-color: #185895; color: white;">@Html.Encode(room.RoomName)</h5>
+            <div class="card-body" style="background-color: #6D9CCA;">
+                <h5 class="card-text text-white" style="font-size:small">Cost: $@Html.Encode(room.Cost)</h5>
+                <h5 class="card-text text-white" style="font-size:small">Special Room: @Html.Encode(room.SpecialRoom)</h5>
+                @if (room.Availability == MSSProject.Data.Models.Availability.Available)
+                {
+                    <h5 class="card-text text-white p-2 rounded" style="background-color: forestgreen">@Html.Encode(room.Availability)</h5>
+                }
+                else
+                {
+                    <h5 class="card-text text-white p-2 rounded" style="background-color: red">@Html.Encode(room.Availability)</h5>
+                }
+                @{
+                    int meetingCount = 0;
+                    foreach (var meeting in Model.MeetingList)
+                    {
+                        if (meeting.RoomId == room.RoomId)
+                        {
+                            meetingCount++;
+                        }
+                    }
+                    <h5 class="card-text text-white" style="font-size:small">Meetings @meetingCount</h5>
+                }
+
+            </div>
+            <div class="form-group m-1 text-center" style="background-color: #185895;">
+                <form asp-page-handler="change" method="post">
+                    <button type="submit" class="btn btn-primary">Change Availability</button>
+                    <input type="hidden" name="id" value="@room.RoomId" />
+                </form>
+            </div>
+        </div>
+    }
+</div>
+
+
+
+

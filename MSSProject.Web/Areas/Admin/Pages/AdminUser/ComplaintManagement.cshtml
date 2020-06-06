@@ -1,0 +1,63 @@
+﻿@page
+@model MSSProject.Web.Areas.Admin.Pages.AdminUser.ComplaintManagementModel
+@{
+    ViewData["Title"] = "Complaint Management";
+    ViewData["ActivePage"] = AdminHubNavPages.ComplaintManagement;
+}
+<h4 class="text-center">@ViewData["Title"]</h4>
+
+<h5 class="text-center mt-5" style="color: white">
+    Awaiting Response
+</h5>
+    <table class="table-bordered w-100 text-center">
+        <tr style="color:white">
+            <th scope="col">Name</th>
+            <th scope="col">Date</th>
+            <th scope="col">Complaint</th>
+            <th scope="col">Response</th>
+            <th scope="col"></th>
+        </tr>
+        @foreach (var complaint in Model.ComplaintList)
+        {
+            if (complaint.AdminStatus == MSSProject.Data.Models.ComplaintStatus.Incomplete)
+            {
+                <tr style="background-color: #185895; color: white">
+                    <td>@Html.Encode(complaint.CreatorName)</td>
+                    <td>@Html.Encode(complaint.DateCreated)</td>
+                    <td class="text-left w-50" style="font-size:small">@Html.Encode(complaint.ComplaintText)</td>
+                    <td class="w-25">
+                        <form asp-page-handler="addresponse" method="post">
+                            <textarea class="form-control" id="response" rows="2" asp-for="AdminResponse" style="font-size:small"></textarea>
+                            <button type="submit" class="btn m-1">Respond</button>
+                            <input type="hidden" name="compId" value="@complaint.CompId"  />
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+<h5 class="text-center mt-5" style="color: white">
+    Completed Responses
+</h5>
+<table class="table-bordered w-100 text-center">
+    <tr style="color: white">
+        <th scope="col">Name</th>
+        <th scope="col">Date Created</th>
+        <th scope="col">Complaint</th>
+        <th scope="col">Complaint ID</th>
+        <th scope="col">Response</th>
+    </tr>
+    @foreach (var complaint in Model.ComplaintList)
+    {
+        if (complaint.AdminStatus == MSSProject.Data.Models.ComplaintStatus.ResponseCompleted)
+        {
+            <tr style="background-color: #185895; color: white">
+                <td>@Html.Encode(complaint.CreatorName)</td>
+                <td>@Html.Encode(complaint.DateCreated)</td>
+                <td class="text-left w-50" style="font-size:small">@Html.Encode(complaint.ComplaintText)</td>
+                <td>@Html.Encode(complaint.CompId)</td>
+                <td class="text-left" style="font-size: small">@Html.Encode(complaint.Response)</td>
+            </tr>
+        }
+    }
+</table>

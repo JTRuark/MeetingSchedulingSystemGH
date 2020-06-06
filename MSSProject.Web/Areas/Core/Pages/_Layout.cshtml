@@ -1,0 +1,21 @@
+﻿@{
+    Layout = "/Pages/Shared/_Layout.cshtml";
+}
+
+<h1 class="mx-auto text-center">Welcome to the User Hub</h1>
+
+<div>
+    <hr />
+    <hr />
+    <div class="row">
+        <div class="col-md-3">
+            <partial name="_UserHubNav" />
+        </div>
+        <div class="background_col_2 col-md-9">
+            @RenderBody()
+        </div>
+    </div>
+</div>
+
+
+@RenderSection("Scripts", required: false)

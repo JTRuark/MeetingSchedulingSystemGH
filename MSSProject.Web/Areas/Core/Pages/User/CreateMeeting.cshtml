@@ -1,0 +1,94 @@
+﻿@page
+@model MSSProject.Web.Areas.Core.Pages.User.CreateMeetingModel
+@{
+    ViewData["Title"] = "Schedule Meeting";
+    ViewData["ActivePage"] = UserHubNavPages.CreateMeeting;
+}
+
+<h4 class="text-center mb-3">@ViewData["Title"]</h4>
+
+<div class="container rounded shadow-lg p-3" style="background-color:#185895">
+    <form asp-page-handler="createmeeting" method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-row m-4">
+            <div class="col m-2">
+                <label style="color:white; font-weight:bold">Choose Room</label>
+                <select required name="selectedroom" class="form-control" id="selectedroom">
+                    <option>Select Room</option>
+                    @foreach (var room in Model.RoomList)
+                    {
+                        @if (room.Availability == MSSProject.Data.Models.Availability.Available)
+                        {
+                            @if (room.SpecialRoom == MSSProject.Data.Models.SpecialRoom.Yes)
+                            {
+                                <option value="@room.RoomId">Special Room: @Html.Encode(room.RoomName) --- Cost: $@Html.Encode(room.Cost + 100)</option>
+                            }
+                            else
+                            {
+                                <option value="@room.RoomId">@Html.Encode(room.RoomName) --- Cost: $@Html.Encode(room.Cost) @Html.Encode(room.RoomId)</option>
+                            }
+                        }
+                    }
+                </select>
+                <hr />
+                <label style="color:white; font-weight:bold">Choose Date and Time</label>
+                <input asp-for="Input.MeetDateTime" class="form-control" type="datetime-local" min="@DateTime.Now" step="1" />
+                <span asp-validation-for="Input.MeetDateTime.Date" class="text-danger"></span>
+                <hr />
+                <label style="color:white; font-weight:bold">Choose Payment Method</label>
+                <select required name="payment" class="form-control" id="payment">
+                    @if (Model.UserPayList == null)
+                    {
+                        <option>No Payments On File</option>
+
+                    }
+                    else
+                    {
+                        <option>Payment Methods</option>
+                        @foreach (var payment in Model.UserPayList)
+                        {
+                            <option value="@payment.PayId">@Html.Encode(payment.CardType) ending in ** @Html.Encode(String.Format(payment.CardNumber.Substring(payment.CardNumber.Length - 4)))</option>
+                        }
+                    }
+                </select>
+                
+            </div>
+            <div class="col m-2">
+                <label style="color:white; font-weight:bold">Select Participants</label>
+                <table name="selectedlist" class="table-bordered w-100 text-center" style="font-size:small">
+                    <tr style="color:white">
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Select</th>
+                    </tr>
+                    @foreach (var user in Model.UserList)
+                    {
+                        <tr class="m-1" style="color:white">
+                            <td>
+                                <input type="hidden" name="UserList.Index" value="@user.Id" />
+                                <input type="hidden" name="UserList[@user.Id].Id" value="@user.Id" />
+                                @user.FirstName @user.LastName
+                            </td>
+                            <td>
+                                @user.Email
+                            </td>
+                            <td><input type="checkbox" name="SelectedList[@user.FirstName @user.LastName].Select" value="true" /></td>
+                        </tr>
+                    }
+                </table>
+                <a class="btn w-100 mt-5 @UserHubNavPages.CreatePaymentNavClass(ViewContext)" asp-page="./CreatePayment">Add New Payment Method</a>
+            </div>
+        </div>
+        <div class="form-row m-4">
+            <div class="col m-2">
+                <a class="btn w-100 @UserHubNavPages.MeetingsNavClass(ViewContext)" id="back" asp-page="./Meetings">Cancel</a>
+            </div>
+            <div class="col m-2">
+                <button type="submit" class="btn w-100">Schedule Meeting</button>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

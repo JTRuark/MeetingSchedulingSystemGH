@@ -1,0 +1,12 @@
+﻿@page
+@model AccessDeniedModel
+@{
+    ViewData["Title"] = "You Are Not Authorized to View This Page";
+}
+
+<header>
+    <h1 class="mt-5 text-warning text-center">@ViewData["Title"]</h1>
+    <p class="text-warning text-center">Please Contact Your Local Administrator for Access.</p>
+    <a id="denied" class="nav-link btn btn-link mx-auto rounded-pill w-50 " asp-area="Core" asp-page="/User/Index" title="AccessDenied">Back to Main User Area</a>
+</header>
+

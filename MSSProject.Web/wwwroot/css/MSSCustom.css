@@ -1,0 +1,51 @@
+﻿.background_col_1 {
+    background-color: #185895;
+}
+
+.background_col_2 {
+    background-color: #083561;
+}
+
+.text_contrast {
+    color: #6D9CCA;
+}
+.input_color {
+    color: white;
+    background-color: #6D9CCA
+}
+.btn {
+    color: #301816 !important;
+    background-color: #E69116 !important;
+    border-color: #F3B04E !important;
+    transition-duration: 0.2s;
+}
+
+    .btn:hover {
+        background-color: #965C07 !important;
+        color: #E69116 !important;
+    }
+
+
+div {
+    color: #6D9CCA;
+}
+
+link:hover {
+    color: #E69116
+}
+
+a {
+    color: #6D9CCA;
+}
+
+h1, h2, h3, h4, h5, h6, h7 {
+    color: #6D9CCA;
+}
+
+label {
+    color: #6D9CCA;
+}
+
+p {
+    color: #6D9CCA;
+}

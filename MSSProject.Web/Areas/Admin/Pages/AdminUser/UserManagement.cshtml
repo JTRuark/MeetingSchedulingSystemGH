@@ -1,0 +1,47 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity
+@using MSSProject.Web.Areas.Identity.Data
+@model MSSProject.Web.Areas.Admin.Pages.AdminUser.UserManagementModel
+@{
+    ViewData["Title"] = "User Management";
+    ViewData["ActivePage"] = AdminHubNavPages.UserManagement;
+}
+@inject UserManager<MSSWebUser> UserManager
+
+<h4 class="text-center mb-3">@ViewData["Title"]</h4>
+
+<p class="text-center mb-3">To change user permission to Administrator, press the button.</p>
+
+<table class="table-bordered w-100 text-center">
+    <tr style="color: whitesmoke">
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Permissions</th>
+        <th scope="col">Manage</th>
+    </tr>
+    @foreach (var user in Model.UserList)
+    {
+        var currUser = await UserManager.GetUserAsync(HttpContext.User);
+        if (currUser.Id != user.Id)
+        {
+            <tr style="background-color: #185895; color: white">
+                <td>@Html.Encode(user.FirstName + " " + user.LastName)</td>
+                <td>@Html.Encode(user.Email)</td>
+                @if (await UserManager.IsInRoleAsync(user, "Administrator") == true)
+                {
+                    <td>Administrator</td>
+                }
+                else
+                {
+                    <td>Standard User</td>
+                }
+                <td>
+                    <form asp-page-handler="addadmin" method="post">
+                        <button type="submit" class="btn btn-primary m-1">Change Permission</button>
+                        <input type="hidden" name="id" value="@user.Id" />
+                    </form>
+                </td>
+            </tr>
+        }
+    }
+</table>

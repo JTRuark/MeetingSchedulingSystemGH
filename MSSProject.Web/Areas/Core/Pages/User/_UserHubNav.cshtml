@@ -1,0 +1,26 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using MSSProject.Web.Areas.Identity.Data
+
+@inject UserManager<MSSWebUser> UserManager
+
+
+<ul class="nav nav-pills flex-column mt-5">
+    <li class="nav-item">
+        <a class="nav-link @UserHubNavPages.IndexNavClass(ViewContext)" id="userhub" asp-page="./Index">User Hub</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link @UserHubNavPages.MeetingsNavClass(ViewContext)" id="meetings" asp-page="./Meetings">Manage Meetings</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link @UserHubNavPages.ComplaintsNavClass(ViewContext)" id="complaints" asp-page="./Complaints">Lodge Complaint</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link @UserHubNavPages.PaymentInfoNavClass(ViewContext)" id="paymentinfo" asp-page="./PaymentInfo">Payment Information</a>
+    </li>
+    @if (User.IsInRole("Administrator") == true)
+    {
+        <li class="nav-item">
+            <a class="nav-link @UserHubNavPages.AdminFunctionsNavClass(ViewContext)" id="adminfunctions" asp-page="./AdminFunctions">Administrator Functions</a>
+        </li>
+    }
+</ul>

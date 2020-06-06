@@ -1,0 +1,53 @@
+﻿@page
+@model PrivacyModel
+@{
+    ViewData["Title"] = "Notes to the Professor";
+}
+<div class="container rounded shadow-lg p-3 w-100" style="background-color:#185895">
+    <h1 class="text-center" style="color:white">@ViewData["Title"]</h1>
+</div>
+
+<div class="container rounded shadow-lg p-3 mt-4 w-100" style="background-color:#185895">
+    <h5 style="color:white">Features Currently Unavailable, Coming Soon!</h5>
+    <ul class="text-white">
+        <li>
+            The user can select participants, but they are not saved in the meeting db. Also, adding and removing from an existing meeting was not implemented.
+        </li>
+        <li>
+            The hour time slot restriction is not implemented.
+        </li>
+        <li>
+            Meetings are displayed and can be deleted, but edits are not functional.
+        </li>
+        <li>
+            Admins do not have access to users billing info.
+        </li>
+        <li>
+            Meetings display filters were not implemented (ran out of time).
+        </li>
+    </ul>
+    <hr />
+    <h5 style="color:white">Key Takeaways and Learnings!</h5>
+    <ul class="text-white">
+        <li>
+            This web-app has it's security foundation built on Microsoft ASP.NET Core and Identity Framework. This was a very good learning experience as we got to see and implement customized authentication and authorization features.
+        </li>
+        <li>
+            The database management utilizes Entity Framework Core. From database schema creation to manipulation of stored data, EF Core is the main event.
+        </li>
+        <li>
+            We utilized Razor pages to consolidate the Controller/View part into one main file, with the markup on a corresponding file. We learned about partial views and the fact we can use C# code directly in the markup file.
+        </li>
+        <li>
+            We learned HTML, CSS, and furthered our knowledge around C# in this project. However, the intense learning prevented us from completing the requirements on time. Despite this, we built the app with a heavy emphasis on security.
+        </li>
+        <li>
+            To sum up, the major takeaways/learning were: HTML, CSS, EF Core, ASP.NET Core, Identity Framework, Web-design, C# (lambda's are pretty cool), and databases.
+        </li>
+        <li>
+            We hope you enjoyed looking through our web app.
+        </li>
+    </ul>
+    <hr />
+    <p class="text-center" style="font-size:x-large; color:white">Justin Ruark and Doug Wendelin</p>
+</div>

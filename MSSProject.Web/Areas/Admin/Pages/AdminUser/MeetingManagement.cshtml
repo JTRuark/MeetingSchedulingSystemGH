@@ -1,0 +1,71 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity
+@using MSSProject.Web.Areas.Identity.Data
+@model MSSProject.Web.Areas.Admin.Pages.AdminUser.MeetingManagementModel
+@{
+    ViewData["Title"] = "Meeting Management";
+    ViewData["ActivePage"] = AdminHubNavPages.MeetingManagement;
+}
+@inject UserManager<MSSWebUser> UserManager
+@inject MSSCoreDbContext dbContext
+
+<h4 class="text-center">@ViewData["Title"]</h4>
+<hr />
+<div>
+
+</div>
+<div>
+    @if (Model.MeetingList == null)
+    {
+        <div class="container rounded shadow-lg p-3 mt-3" style="background-color:#185895">
+            <h3 class="text-center" style="color:white">No Meetings Scheduled</h3>
+        </div>
+    }
+    else
+    {
+        <h3 class="text-center mb-3" style="color:white">Current Meetings Scheduled</h3>
+        <table class="table-bordered w-100 text-center">
+            <tr style="color:white">
+                <th scope="col">Facilitator</th>
+                <th scope="col">Date and Time</th>
+                <th scope="col">Room</th>
+                <th scope="col">Special Room</th>
+                <th scope="col">Cost</th>
+                <th scope="col">Participants</th>
+                <th scope="col">Options</th>
+            </tr>
+            @foreach (var meeting in Model.MeetingList)
+            {
+                var fac = await UserManager.FindByNameAsync(meeting.OwnerId);
+                var room = dbContext.Rooms.Find(meeting.RoomId);
+                var facName = fac.FirstName + " " + fac.LastName;
+                <tr style="background-color: #185895; color:white">
+                    <td>@Html.Encode(facName)</td>
+                    <td>@Html.Encode(meeting.MeetDateTime)</td>
+                    <td>@Html.Encode(room.RoomName)</td>
+                    <td>@Html.Encode(room.SpecialRoom)</td>
+                    <td>$@Html.Encode(room.Cost)</td>
+                    @{
+                        if (meeting.ParticipantList == null)
+                        {
+                            <td>No Participants</td>
+                        }
+                        else
+                        {
+                            foreach (var participant in meeting.ParticipantList)
+                            {
+                                <td>@Html.Encode(participant)</td>
+                            }
+                        }
+                    }
+                    <td>
+                        <form asp-page-handler="deletemeeting" method="post">
+                            <button type="submit" class="btn m-1">Delete</button>
+                            <input type="hidden" name="meetId" value="@meeting.MeetId" />
+                        </form>
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+</div>

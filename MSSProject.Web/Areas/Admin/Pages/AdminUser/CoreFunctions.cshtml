@@ -1,0 +1,12 @@
+﻿@page
+@model MSSProject.Web.Areas.Admin.Pages.AdminUser.CoreFunctionsModel
+@{
+    ViewData["Title"] = "Navigate to Standard User Functions";
+    ViewData["ActivePage"] = AdminHubNavPages.CoreFunctions;
+}
+
+<h4 class="mt-4 text-center mx-auto">@ViewData["Title"]</h4>
+
+<div class="shadow p-4 mt-5 text-center w-50 rounded-pill mx-auto background_col_1">
+    <a id="manage" class="nav-link btn btn-link mx-auto rounded-pill w-75 " asp-area="Core" asp-page="/User/Index" title="Core Hub">Standard User Functions</a>
+</div>

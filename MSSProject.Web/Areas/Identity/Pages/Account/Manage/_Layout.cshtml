@@ -1,0 +1,25 @@
+﻿@{
+    Layout = "/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Account Management</h1>
+
+<div>
+    <h4>Change Account Settings</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-3">
+            <partial name="_ManageNav" />
+        </div>
+        <div class="col-md-5">
+            @RenderBody()
+        </div>
+        <div class="text-center col-md-4">
+            <img class="img-fluid w-auto h-auto" src="~/images/MainLogo_NoBG.png" alt="PennStateSoft"/>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

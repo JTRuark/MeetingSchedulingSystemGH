@@ -1,0 +1,65 @@
+﻿@page
+@model MSSProject.Web.Areas.Core.Pages.User.CreatePaymentModel
+@{
+    ViewData["Title"] = "Create New Payment Method";
+    ViewData["ActivePage"] = UserHubNavPages.CreatePayment;
+}
+
+<h4 class="text-center mb-3">@ViewData["Title"]</h4>
+
+<div class="container rounded shadow-lg p-3" style="background-color:#185895">
+    <form asp-page-handler="createpayment" method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-row m-4">
+            <div class="col m-2">
+                <input asp-for="Input.FirstName" class="form-control" placeholder="First Name" />
+                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+            </div>
+            <div class="col m-2">
+                <input asp-for="Input.LastName" class="form-control" placeholder="Last Name" />
+                <span asp-validation-for="Input.LastName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row m-4">
+            <div class="col m-2">
+                <input asp-for="Input.CardNumber" class="form-control" type="number" placeholder="Card Number" />
+                <span asp-validation-for="Input.CardNumber" class="text-danger"></span>
+            </div>
+            <div class="col m-2">
+                <input asp-for="Input.Cvv" class="form-control" type="number" placeholder="CVV" />
+                <span asp-validation-for="Input.Cvv" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row m-4 text-center">
+            <div class="col m-2">
+                <select class="form-control" asp-for="Input.CardType" id="cardtype">
+                    <option>Visa</option>
+                    <option>Mastercard</option>
+                    <option>AMEX</option>
+                    <option>Debit</option>
+                </select>
+            </div>
+            <div class="col m-2">
+                <input asp-for="Input.ExpirationDate" class="form-control" type="month" min="@DateTime.Now" placeholder="MM/DD/YYYY" />
+                <span asp-validation-for="Input.ExpirationDate.Date" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row m-4">
+            <div class="col m-2">
+                <input asp-for="Input.BillingZipCode" class="form-control w-25" type="number" placeholder="Billing Zip Code" />
+                <span asp-validation-for="Input.BillingZipCode" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row m-4">
+            <div class="col m-2">
+                <a class="btn w-100 @UserHubNavPages.PaymentInfoNavClass(ViewContext)" id="back" asp-page="./PaymentInfo">Cancel</a>
+            </div>
+            <div class="col m-2">
+                <button type="submit" class="btn w-100">Create Payment Method</button>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

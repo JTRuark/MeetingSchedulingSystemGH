@@ -1,0 +1,26 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using MSSProject.Web.Areas.Identity.Data
+
+@inject SignInManager<MSSWebUser> SignInManager
+@inject UserManager<MSSWebUser> UserManager
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    @if (User.IsInRole("Administrator") == true)
+    {
+        <div class="shadow p-4 mb-4 mt-5 text-center w-50 rounded-pill mx-auto background_col_1">
+            <a id="manage" class="nav-link btn btn-link shadow mx-auto rounded-pill w-75 " asp-area="Admin" asp-page="/AdminUser/Index" title="Admin Hub">Administrator Functions</a>
+        </div>
+    }
+    else
+    {
+        <div class="shadow p-4 mb-4 mt-5 text-center w-50 rounded-pill mx-auto background_col_1">
+            <a id="manage" class="nav-link btn btn-link shadow mx-auto rounded-pill w-75 " asp-area="Core" asp-page="/User/Index" title="User Hub">User Hub</a>
+        </div>
+    }
+}
+else
+{
+    <h3 class="display-4 text-center">Please Login To Begin</h3>
+}
